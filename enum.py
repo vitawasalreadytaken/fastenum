@@ -247,8 +247,10 @@ class EnumMeta(type):
         enum members themselves.
 
         """
-        if _is_dunder(name):
-            raise AttributeError(name)
+        # The `_is_dunder` check is not strictly necessary here
+        # and removing it speeds up attribute lookups.
+        # if _is_dunder(name):
+        #     raise AttributeError(name)
         try:
             return cls._member_map_[name]
         except KeyError:
