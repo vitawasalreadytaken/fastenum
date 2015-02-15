@@ -26,7 +26,11 @@ class EnumMeta(type):
 				member = enum_class.__new__(enum_class)
 				member.name = name
 				member.value = value
-				args = value if isinstance(value, tuple) else (value,)
+				# name and value are not expected to change, so we can cache __repr__ and __hash__.
+				member._repr = '<%s.%s: %r>' % (enum_class.__name__, name, value)
+				member._hash = hash(name)
+
+				#args = value if isinstance(value, tuple) else (value,)
 				member.__init__()
 				setattr(enum_class, name, member)
 				enum_class._member_map_[name] = member
@@ -64,13 +68,13 @@ class EnumMeta(type):
 class Enum(metaclass = EnumMeta):
 
 	def __repr__(self) -> str:
-		return '<%s.%s: %r>' % (self.__class__.__name__, self.name, self.value)
+		return self._repr # cache of `'<%s.%s: %r>' % (self.__class__.__name__, self.name, self.value)`
 
 	def __str__(self) -> str:
 		return '%s.%s' % (self.__class__.__name__, self.name)
 
 	def __hash__(self):
-		return hash(self.name)
+		return self._hash # cache of `hash(self.name)`
 
 	def __format__(self, format_spec):
 		return str.__format__(str(self), format_spec)
