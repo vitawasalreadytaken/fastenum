@@ -1,3 +1,6 @@
+# The original enum test suite, adapted for fastenum (some behavior
+# is no longer guaranteed so the relevant tests have been commented out).
+
 import fastenum
 import inspect
 import pydoc
