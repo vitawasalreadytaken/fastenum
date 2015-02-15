@@ -14,7 +14,7 @@ def fmt(t: float) -> str:
 print('Timing')
 times = {}
 tab = prettytable.PrettyTable(('Implementation', 'Enum.MEMBER', 'Enum["MEMBER"]', 'Enum(value)', 'hash(Enum.MEMBER)', 'repr(Enum.MEMBER)'))
-for module in ('enum_native', 'enum', 'fastenum'):
+for module in ('enum_native', 'enum_simple', 'fastenum'):
 	t = {
 		'attr': time(module, 'E.MEMBER'),
 		'item': time(module, 'E["MEMBER"]'),
@@ -30,7 +30,7 @@ print(tab)
 
 print('\nSpeedup vs native implementation')
 tab = prettytable.PrettyTable(('Implementation', 'Enum.MEMBER', 'Enum["MEMBER"]', 'Enum(value)', 'hash(Enum.MEMBER)', 'repr(Enum.MEMBER)'))
-for module in ('enum', 'fastenum'):
+for module in ('enum_simple', 'fastenum'):
 	tab.add_row([module] + [
 		'{:.1f}%'.format(100 - 100 * times[module][k] / times['enum_native'][k])
 		for k in ('attr', 'item', 'val', 'hash', 'repr')
