@@ -192,11 +192,11 @@ class TestEnum(unittest.TestCase):
 
 	def test_enum(self):
 		Season = self.Season
-		#lst = list(Season)
-		#self.assertEqual(len(lst), len(Season))
-		#self.assertEqual(len(Season), 4, Season)
-		#self.assertEqual(
-		#	[Season.SPRING, Season.SUMMER, Season.AUTUMN, Season.WINTER], lst)
+		lst = list(Season)
+		self.assertEqual(len(lst), len(Season))
+		self.assertEqual(len(Season), 4, Season)
+		self.assertEqual(
+			[Season.SPRING, Season.SUMMER, Season.AUTUMN, Season.WINTER], lst)
 
 		for i, season in enumerate('SPRING SUMMER AUTUMN WINTER'.split(), 1):
 			e = Season(i)
@@ -204,7 +204,7 @@ class TestEnum(unittest.TestCase):
 			self.assertEqual(e.value, i)
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, season)
-			#self.assertIn(e, Season)
+			self.assertIn(e, Season)
 			self.assertIs(type(e), Season)
 			self.assertIsInstance(e, Season)
 			self.assertEqual(str(e), 'Season.' + season)
@@ -265,17 +265,17 @@ class TestEnum(unittest.TestCase):
 	#		class Wrong(Enum):
 	#			_any_name_ = 9
 
-	#def test_contains(self):
-	#	Season = self.Season
-	#	self.assertIn(Season.AUTUMN, Season)
-	#	self.assertNotIn(3, Season)
+	def test_contains(self):
+		Season = self.Season
+		self.assertIn(Season.AUTUMN, Season)
+		self.assertNotIn(3, Season)
 
-	#	val = Season(3)
-	#	self.assertIn(val, Season)
+		val = Season(3)
+		self.assertIn(val, Season)
 
-	#	class OtherEnum(Enum):
-	#		one = 1; two = 2
-	#	self.assertNotIn(OtherEnum.two, Season)
+		class OtherEnum(Enum):
+			one = 1; two = 2
+		self.assertNotIn(OtherEnum.two, Season)
 
 	def test_comparisons(self):
 		Season = self.Season
@@ -602,23 +602,23 @@ class TestEnum(unittest.TestCase):
 	#	Season = self.Season
 	#	self.assertTrue(getattr(Season, '__eq__'))
 
-	#def test_iteration_order(self):
-	#	class Season(Enum):
-	#		SUMMER = 2
-	#		WINTER = 4
-	#		AUTUMN = 3
-	#		SPRING = 1
-	#	self.assertEqual(
-	#			list(Season),
-	#			[Season.SUMMER, Season.WINTER, Season.AUTUMN, Season.SPRING],
-	#			)
+	def test_iteration_order(self):
+		class Season(Enum):
+			SUMMER = 2
+			WINTER = 4
+			AUTUMN = 3
+			SPRING = 1
+		self.assertEqual(
+				list(Season),
+				[Season.SUMMER, Season.WINTER, Season.AUTUMN, Season.SPRING],
+				)
 
-	#def test_reversed_iteration_order(self):
-	#	self.assertEqual(
-	#			list(reversed(self.Season)),
-	#			[self.Season.WINTER, self.Season.AUTUMN, self.Season.SUMMER,
-	#			 self.Season.SPRING]
-	#			)
+	def test_reversed_iteration_order(self):
+		self.assertEqual(
+				list(reversed(self.Season)),
+				[self.Season.WINTER, self.Season.AUTUMN, self.Season.SUMMER,
+				 self.Season.SPRING]
+				)
 
 	#def test_programatic_function_string(self):
 	#	SummerMonth = Enum('SummerMonth', 'june july august')

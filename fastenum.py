@@ -17,7 +17,7 @@ class EnumMeta(type):
 	def __new__(metacls, cls, bases, classdict: collections.OrderedDict):
 		enum_class = super().__new__(metacls, cls, bases, classdict)
 		# name->value map
-		enum_class._member_map_ = {}
+		enum_class._member_map_ = collections.OrderedDict()
 		# Reverse value->name map for hashable values.
 		enum_class._value2member_map_ = {}
 
@@ -62,6 +62,18 @@ class EnumMeta(type):
 
 	def __getitem__(cls, name: str) -> 'Enum':
 		return cls._member_map_[name]
+
+
+	def __iter__(cls):
+		return (v for v in cls._member_map_.values())
+
+
+	def __reversed__(cls):
+		return reversed([ v for v in cls ])
+
+
+	def __len__(cls):
+		return len(cls._member_map_)
 
 
 
